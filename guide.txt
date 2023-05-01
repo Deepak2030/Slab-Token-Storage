@@ -1,0 +1,67 @@
+# guide.txt
+
+This Solidity project is a smart contract called "SlabTokenStorage." The contract aims to provide a storage service for a given ERC20 token. Users can deposit their tokens into the storage contract, and the deposited amount will be assigned to a specific "slab" based on capacity. Each slab has a predefined capacity, and the deposited tokens will be assigned to the first available slab that can accommodate the deposit.
+
+The contract has the following components:
+
+1. State variables:
+   - `token`: An instance of the IERC20 interface to interact with the ERC20 token.
+   - `slabs`: An array representing the slab capacities.
+   - `slabCapacities`: An array representing the available capacities in each slab.
+   - `depositSlab`: A mapping to store the slab index associated with each depositor's address.
+
+2. Events:
+   - `Deposit`: Emitted when a user deposits tokens into the contract.
+   - `Withdraw`: Emitted when a user withdraws their tokens from the contract.
+
+3. Errors:
+   - `SlabTokenStorage__ERR_AMOUNT_ZERO`: Thrown when the deposit amount is zero.
+   - `SlabTokenStorage__ERR_NO_SLAB_AVAILABLE`: Thrown when no slab can accommodate the deposit amount.
+   - `SlabTokenStorage__ERR_NO_DEPOSIT_FOUND`: Thrown when the user tries to withdraw without having made a deposit.
+
+4. Constructor:
+   - Initializes the contract with the token address.
+
+5. Functions:
+   - `deposit`: Allows users to deposit their tokens into the contract and assign them to a slab.
+   - `withdraw`: Allows users to withdraw their tokens from the contract.
+   - `getSlabOfDepositor`: Returns the slab index associated with a depositor's address.
+   - `_getAvailableSlabIndex`: Internal function to find the index of the first available slab that can accommodate the deposit amount.
+
+
+
+Low-level Representation:
+
+1. State variables:
+   - token (address)
+   - slabs (uint256[5])
+   - slabCapacities (uint256[5])
+   - depositSlab (mapping: address => uint256)
+
+2. Events:
+   - Deposit (indexed: user, amount, slab)
+   - Withdraw (indexed: user, amount, slab)
+
+3. Errors:
+   - ERR_AMOUNT_ZERO
+   - ERR_NO_SLAB_AVAILABLE
+   - ERR_NO_DEPOSIT_FOUND
+
+4. Constructor:
+   - Input: _tokenAddress (address)
+   - Initializes: token
+
+5. Functions:
+   - deposit:
+     - Input: _amount (uint256)
+     - Checks: amount > 0, available slab found
+     - Effects: Updates depositSlab, slabCapacities, token balance, emits Deposit event
+   - withdraw:
+     - Checks: deposit exists
+     - Effects: Updates slabCapacities, depositSlab, token balance, emits Withdraw event
+   - getSlabOfDepositor:
+     - Input: _depositor (address)
+     - Output: slabIndex (uint256)
+   - _getAvailableSlabIndex:
+     - Input: _amount (uint256)
+     - Output: slabIndex (int256)

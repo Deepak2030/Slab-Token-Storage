@@ -1,0 +1,25 @@
+# decisions.txt
+
+1. Pattern: Modular Design
+- Decision: Separate the token storage logic from the main contract.
+- Justification: Modular design helps to create a more maintainable and readable codebase. By separating the token storage logic, we can update and maintain the storage logic independently, without affecting the main contract.
+
+2. Pattern: Open Zeppelin Library
+- Decision: Import and use the IERC20 interface from the Open Zeppelin library.
+- Justification: Open Zeppelin is a widely-used and audited library that provides secure and tested implementations of smart contract standards. By using the IERC20 interface, we can ensure the contract is compatible with the ERC20 token standard.
+
+3. Pattern: Events
+- Decision: Emit events (Deposit and Withdraw) to track state changes.
+- Justification: Events provide a way to track the contract's state changes off-chain. By emitting Deposit and Withdraw events, we can observe and analyze these actions more efficiently.
+
+4. Pattern: Error Handling
+- Decision: Use custom errors for better error messages and easier debugging.
+- Justification: Custom errors provide a way to give more descriptive error messages when a function call fails. This makes it easier for developers and users to identify the cause of a failed transaction.
+
+5. Pattern: Slab Mechanism
+- Decision: Implement a slab-based token deposit system.
+- Justification: The slab mechanism allows users to deposit tokens based on predefined slabs, creating a more organized and manageable storage system. This design allows for better allocation of storage and easier tracking of deposits.
+
+6. Pattern: Access Control
+- Decision: Restrict access to internal functions.
+- Justification: Restricting access to internal functions helps to protect the contract from unauthorized access and potential vulnerabilities. In this contract, the '_getAvailableSlabIndex' function is internal, ensuring that only the contract itself can call it.
